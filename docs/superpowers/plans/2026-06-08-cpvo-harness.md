@@ -4,9 +4,9 @@
 
 **Goal:** Build `cpvo`, a public Python reference harness that computes cost per verified outcome from AI-tool spend joined to git outcomes, with the two-level wall (private IC mirror vs. team budget altitude) enforced in code.
 
-**Architecture:** Layered pipeline — `loaders/` normalize any source into a canonical `Dataset`, pure `engine/` functions compute metrics over it, `render/` emits CLI tables/JSON and a static HTML/SVG dashboard. The wall is enforced by the *absence* of any leaderboard code path; `test_wall.py` regression-protects it.
+**Architecture:** Layered pipeline - `loaders/` normalize any source into a canonical `Dataset`, pure `engine/` functions compute metrics over it, `render/` emits CLI tables/JSON and a static HTML/SVG dashboard. The wall is enforced by the *absence* of any leaderboard code path; `test_wall.py` regression-protects it.
 
-**Tech Stack:** Python 3.13, pandas, requests (GitHub adapter), PyYAML (seat→author mapping), pytest. No chart library — the dashboard is hand-built inline SVG.
+**Tech Stack:** Python 3.13, pandas, requests (GitHub adapter), PyYAML (seat→author mapping), pytest. No chart library - the dashboard is hand-built inline SVG.
 
 **Spec:** `../../../../sawinyh.com/beneficial-binary/docs/superpowers/specs/2026-06-08-cpvo-harness-design.md` (also mirrored conceptually here).
 
@@ -121,7 +121,7 @@ dashboard.html
 
 `src/cpvo/__init__.py`:
 ```python
-"""cpvo — cost per verified outcome reference harness."""
+"""cpvo - cost per verified outcome reference harness."""
 
 __version__ = "0.1.0"
 ```
@@ -136,7 +136,7 @@ python3 -m venv .venv
 .venv/bin/pip install -q -e ".[dev]"
 .venv/bin/pytest -q
 ```
-Expected: pytest runs, "no tests ran" (exit 5) — acceptable at this point.
+Expected: pytest runs, "no tests ran" (exit 5) - acceptable at this point.
 
 - [ ] **Step 6: Commit**
 
@@ -290,7 +290,7 @@ def validate_columns(df: pd.DataFrame, cols: list[str], name: str) -> None:
 @dataclass
 class Dataset:
     """All canonical tables for one analysis window. Optional tables may be None."""
-    seat_spend: pd.DataFrame        # SEAT_SPEND_COLS  (seat-week cost — only cost source)
+    seat_spend: pd.DataFrame        # SEAT_SPEND_COLS  (seat-week cost - only cost source)
     seat_author: pd.DataFrame       # SEAT_AUTHOR_COLS (seat → author join backbone)
     author: pd.DataFrame            # AUTHOR_COLS      (author → team, seniority)
     merged_change: pd.DataFrame     # MERGED_CHANGE_COLS
@@ -635,7 +635,7 @@ git commit -m "feat: team CPVO engine with weekly distribution"
 
 ---
 
-## Task 7: Mirror engine (`engine/mirror.py`) — the wall
+## Task 7: Mirror engine (`engine/mirror.py`) - the wall
 
 **Files:**
 - Create: `src/cpvo/engine/mirror.py`
@@ -941,7 +941,7 @@ git commit -m "feat: cohort comparison with caveats and min-outcome gate"
 - Create: `src/cpvo/loaders/synthetic.py`
 - Test: `tests/test_synthetic.py`
 
-Generates the narrative fixtures (Atlas tail / Borealis drift / Cardinal cohort + the contributor stories), deterministically from a seed. Uses `random.Random(seed)` only — no wall-clock, fully reproducible.
+Generates the narrative fixtures (Atlas tail / Borealis drift / Cardinal cohort + the contributor stories), deterministically from a seed. Uses `random.Random(seed)` only - no wall-clock, fully reproducible.
 
 - [ ] **Step 1: Write the failing test**
 
@@ -1097,7 +1097,7 @@ def generate(seed: int = 42, weeks: int = 12) -> Dataset:
     return ds
 ```
 
-> Note: if `test_atlas_has_a_high_burn_low_outcome_contributor` or `test_cardinal_*` fails because of seed-dependent randomness, adjust the failure probabilities or the `a_waste1` session split — they are tuned, not sacred. The deterministic and validation tests must pass as written.
+> Note: if `test_atlas_has_a_high_burn_low_outcome_contributor` or `test_cardinal_*` fails because of seed-dependent randomness, adjust the failure probabilities or the `a_waste1` session split - they are tuned, not sacred. The deterministic and validation tests must pass as written.
 
 - [ ] **Step 4: Run test to verify it passes**
 
@@ -1248,7 +1248,7 @@ Expected: FAIL (ModuleNotFoundError)
 
 Pure transform (build_changes_from_prs) is unit-tested. fetch_merged_prs is a
 thin requests wrapper documented but not unit-tested. This adapter provides PR
-and revert/hotfix signals only; it does NOT provide per-PR cost — cost comes
+and revert/hotfix signals only; it does NOT provide per-PR cost - cost comes
 solely from seat-week spend.
 """
 from __future__ import annotations
@@ -1322,12 +1322,12 @@ def fetch_merged_prs(repo: str, token: str, since: str | None = None) -> list[di
 
 `src/cpvo/loaders/gitlab.py`:
 ```python
-"""GitLab adapter — documented stub.
+"""GitLab adapter - documented stub.
 
 The GitHub adapter (loaders/github.py) proves the pattern: fetch merged MRs,
 map author + merged_at, detect revert/hotfix signals, emit MergedChange and
 OutcomeEvent. A GitLab implementation would mirror it against the GitLab MR API.
-Not implemented in v1 on purpose — see the plan's "out of scope".
+Not implemented in v1 on purpose - see the plan's "out of scope".
 """
 from __future__ import annotations
 
@@ -1393,7 +1393,7 @@ Expected: FAIL (ModuleNotFoundError)
 ```python
 """Design tokens ported from the sawinyh blog chart system + shared watermark."""
 
-WATERMARK = "[ILLUSTRATIVE — synthetic data]"
+WATERMARK = "[ILLUSTRATIVE - synthetic data]"
 
 COLORS = {
     "teal": "#5de4db",
@@ -1433,7 +1433,7 @@ def _fmt(v, money=False):
 def render_team_text(ds: Dataset, n_days: int = 14, as_of: str | None = None) -> str:
     """Team-altitude report: CPVO distribution + review tax. No individual names."""
     summ = cpvo_summary(ds, n_days, as_of)
-    lines = [WATERMARK, "", "TEAM ALTITUDE — where budget decisions live", ""]
+    lines = [WATERMARK, "", "TEAM ALTITUDE - where budget decisions live", ""]
     lines.append(f"{'team':<10} {'spend':>10} {'weight':>8} {'cpvo':>10} {'median/wk':>10} {'p90/wk':>10}")
     for _, r in summ.iterrows():
         lines.append(
@@ -1468,7 +1468,7 @@ def render_mirror_text(ds: Dataset, author_id: str) -> str:
     return "\n".join([
         WATERMARK,
         "",
-        "PRIVATE MIRROR — for your own self-correction, not a scoreboard.",
+        "PRIVATE MIRROR - for your own self-correction, not a scoreboard.",
         "These numbers are never ranked against anyone else.",
         "",
         f"  author:        {m['author_id']}",
@@ -1482,7 +1482,7 @@ def render_cohort_text(ds: Dataset, ai_heavy: str, ai_light: str,
                        n_days: int = 14, as_of: str | None = None,
                        min_outcomes: int = 20) -> str:
     res = cohort_compare(ds, ai_heavy, ai_light, n_days, as_of, min_outcomes)
-    lines = [WATERMARK, "", "BUDGET ALTITUDE — cohort comparison (two axes)", ""]
+    lines = [WATERMARK, "", "BUDGET ALTITUDE - cohort comparison (two axes)", ""]
     for side in ("ai_heavy", "ai_light"):
         s = res[side]
         lines.append(
@@ -1491,7 +1491,7 @@ def render_cohort_text(ds: Dataset, ai_heavy: str, ai_light: str,
             f"cpvo={_fmt(s['cpvo'], money=True)}"
         )
     lines += ["", "Verdict:"]
-    lines.append(f"  {res['verdict'] or 'NO VERDICT — ' + res['verdict_reason']}")
+    lines.append(f"  {res['verdict'] or 'NO VERDICT - ' + res['verdict_reason']}")
     lines += ["", "Read like a skeptic:"]
     lines += [f"  - {c}" for c in res["caveats"]]
     return "\n".join(lines)
@@ -1647,10 +1647,10 @@ def render_dashboard(ds: Dataset, mirror_author: str, n_days: int = 14,
 <body>
  <div class="wm">{WATERMARK}</div>
  <h1>CPVO starter dashboard · 12 weeks</h1>
- <h2>Team altitude — where budget decisions live</h2>
+ <h2>Team altitude - where budget decisions live</h2>
  <div class="grid">{cut1}{cut2}{cut3}{cut4}</div>
- <hr class="wall"><div class="wall-label">THE WALL — nothing below is ever ranked</div>
- <h2>Private mirror — visible only to the individual</h2>
+ <hr class="wall"><div class="wall-label">THE WALL - nothing below is ever ranked</div>
+ <h2>Private mirror - visible only to the individual</h2>
  <div class="mirror">
    <div><strong>{m['author_id']}</strong></div>
    <div>rework ratio: {('%.2f' % m['rework_ratio']) if m['rework_ratio'] is not None else 'n/a'}
@@ -1844,7 +1844,7 @@ git commit -m "feat: cpvo CLI entry with five subcommands"
 
 Asserts the wall holds structurally and regression-protects it.
 
-- [ ] **Step 1: Write the test (this one should PASS immediately — it asserts existing structure)**
+- [ ] **Step 1: Write the test (this one should PASS immediately - it asserts existing structure)**
 
 `tests/test_wall.py`:
 ```python

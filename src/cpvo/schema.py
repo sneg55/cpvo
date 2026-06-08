@@ -28,7 +28,7 @@ def validate_columns(df: pd.DataFrame, cols: list[str], name: str) -> None:
 @dataclass
 class Dataset:
     """All canonical tables for one analysis window. Optional tables may be None."""
-    seat_spend: pd.DataFrame        # SEAT_SPEND_COLS  (seat-week cost — only cost source)
+    seat_spend: pd.DataFrame        # SEAT_SPEND_COLS  (seat-week cost - only cost source)
     seat_author: pd.DataFrame       # SEAT_AUTHOR_COLS (seat → author join backbone)
     author: pd.DataFrame            # AUTHOR_COLS      (author → team, seniority)
     merged_change: pd.DataFrame     # MERGED_CHANGE_COLS

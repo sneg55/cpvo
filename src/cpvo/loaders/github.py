@@ -2,7 +2,7 @@
 
 Pure transform (build_changes_from_prs) is unit-tested. fetch_merged_prs is a
 thin requests wrapper documented but not unit-tested. This adapter provides PR
-and revert/hotfix signals only; it does NOT provide per-PR cost — cost comes
+and revert/hotfix signals only; it does NOT provide per-PR cost - cost comes
 solely from seat-week spend.
 """
 from __future__ import annotations

@@ -20,7 +20,7 @@ def _fmt(v, money=False):
 def render_team_text(ds: Dataset, n_days: int = 14, as_of: str | None = None) -> str:
     """Team-altitude report: CPVO distribution + review tax. No individual names."""
     summ = cpvo_summary(ds, n_days, as_of)
-    lines = [WATERMARK, "", "TEAM ALTITUDE — where budget decisions live", ""]
+    lines = [WATERMARK, "", "TEAM ALTITUDE - where budget decisions live", ""]
     lines.append(f"{'team':<10} {'spend':>10} {'weight':>8} {'cpvo':>10} {'median/wk':>10} {'p90/wk':>10}")
     for _, r in summ.iterrows():
         lines.append(
@@ -55,7 +55,7 @@ def render_mirror_text(ds: Dataset, author_id: str) -> str:
     return "\n".join([
         WATERMARK,
         "",
-        "PRIVATE MIRROR — for your own self-correction, not a scoreboard.",
+        "PRIVATE MIRROR - for your own self-correction, not a scoreboard.",
         "These numbers are never ranked against anyone else.",
         "",
         f"  author:        {m['author_id']}",
@@ -69,7 +69,7 @@ def render_cohort_text(ds: Dataset, ai_heavy: str, ai_light: str,
                        n_days: int = 14, as_of: str | None = None,
                        min_outcomes: int = 20) -> str:
     res = cohort_compare(ds, ai_heavy, ai_light, n_days, as_of, min_outcomes)
-    lines = [WATERMARK, "", "BUDGET ALTITUDE — cohort comparison (two axes)", ""]
+    lines = [WATERMARK, "", "BUDGET ALTITUDE - cohort comparison (two axes)", ""]
     for side in ("ai_heavy", "ai_light"):
         s = res[side]
         lines.append(
@@ -78,7 +78,7 @@ def render_cohort_text(ds: Dataset, ai_heavy: str, ai_light: str,
             f"cpvo={_fmt(s['cpvo'], money=True)}"
         )
     lines += ["", "Verdict:"]
-    lines.append(f"  {res['verdict'] or 'NO VERDICT — ' + res['verdict_reason']}")
+    lines.append(f"  {res['verdict'] or 'NO VERDICT - ' + res['verdict_reason']}")
     lines += ["", "Read like a skeptic:"]
     lines += [f"  - {c}" for c in res["caveats"]]
     return "\n".join(lines)

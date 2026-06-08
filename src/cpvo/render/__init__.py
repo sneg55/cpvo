@@ -1,1 +1,1 @@
-"""render — CLI tables/JSON and the static HTML/SVG dashboard."""
+"""render - CLI tables/JSON and the static HTML/SVG dashboard."""

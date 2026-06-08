@@ -1,1 +1,1 @@
-"""engine — pure metric functions over the canonical Dataset."""
+"""engine - pure metric functions over the canonical Dataset."""

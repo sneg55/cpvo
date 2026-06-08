@@ -99,10 +99,10 @@ def render_dashboard(ds: Dataset, mirror_author: str, n_days: int = 14,
 <body>
  <div class="wm">{WATERMARK}</div>
  <h1>CPVO starter dashboard · 12 weeks</h1>
- <h2>Team altitude — where budget decisions live</h2>
+ <h2>Team altitude - where budget decisions live</h2>
  <div class="grid">{cut1}{cut2}{cut3}{cut4}</div>
- <hr class="wall"><div class="wall-label">THE WALL — nothing below is ever ranked</div>
- <h2>Private mirror — visible only to the individual</h2>
+ <hr class="wall"><div class="wall-label">THE WALL - nothing below is ever ranked</div>
+ <h2>Private mirror - visible only to the individual</h2>
  <div class="mirror">
    <div><strong>{m['author_id']}</strong></div>
    <div>rework ratio: {rework_str}

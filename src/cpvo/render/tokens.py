@@ -1,6 +1,6 @@
 """Design tokens ported from the sawinyh blog chart system + shared watermark."""
 
-WATERMARK = "[ILLUSTRATIVE — synthetic data]"
+WATERMARK = "[ILLUSTRATIVE - synthetic data]"
 
 COLORS = {
     "teal": "#5de4db",

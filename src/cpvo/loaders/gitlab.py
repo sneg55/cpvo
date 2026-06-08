@@ -1,9 +1,9 @@
-"""GitLab adapter — documented stub.
+"""GitLab adapter - documented stub.
 
 The GitHub adapter (loaders/github.py) proves the pattern: fetch merged MRs,
 map author + merged_at, detect revert/hotfix signals, emit MergedChange and
 OutcomeEvent. A GitLab implementation would mirror it against the GitLab MR API.
-Not implemented in v1 on purpose — see the plan's "out of scope".
+Not implemented in v1 on purpose - see the plan's "out of scope".
 """
 from __future__ import annotations
 
